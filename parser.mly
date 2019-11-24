@@ -32,6 +32,7 @@ open Syntax
 %token <Support.Error.info> PRED
 %token <Support.Error.info> ISZERO
 %token <Support.Error.info> NAT
+%token <Support.Error.info> NOT
 
 /* Identifier and constant value tokens */
 %token <string Support.Error.withinfo> UCID  /* uppercase-initial */
@@ -122,6 +123,8 @@ AppTerm :
       { TmPred($1, $2) }
   | ISZERO ATerm
       { TmIsZero($1, $2) }
+  | NOT ATerm
+      { TmNot($1, $2) }
 
 /* Atomic terms are ones that never require extra parentheses */
 ATerm :

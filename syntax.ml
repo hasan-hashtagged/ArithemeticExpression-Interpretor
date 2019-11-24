@@ -17,6 +17,7 @@ type term =
   | TmSucc of info * term
   | TmPred of info * term
   | TmIsZero of info * term
+  | TmNot of info * term
 
 type command =
   | Eval of info * term
@@ -32,6 +33,7 @@ let tmInfo t = match t with
   | TmSucc(fi,_) -> fi
   | TmPred(fi,_) -> fi
   | TmIsZero(fi,_) -> fi 
+  | TmNot(fi,_) -> fi 
 
 (* ---------------------------------------------------------------------- *)
 (* Printing *)
