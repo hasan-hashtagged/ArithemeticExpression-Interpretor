@@ -33,6 +33,7 @@ open Syntax
 %token <Support.Error.info> ISZERO
 %token <Support.Error.info> NAT
 %token <Support.Error.info> NOT
+%token <Support.Error.info> AND
 
 /* Identifier and constant value tokens */
 %token <string Support.Error.withinfo> UCID  /* uppercase-initial */
@@ -113,6 +114,8 @@ Term :
       { $1 }
   | IF Term THEN Term ELSE Term
       { TmIf($1, $2, $4, $6) }
+  | AND Term Term
+      { TmAnd($1,$2,$3) }
 
 AppTerm :
     ATerm

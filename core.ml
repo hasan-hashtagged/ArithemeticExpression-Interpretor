@@ -50,6 +50,13 @@ let rec eval1 t = match t with
   | TmNot(fi,t1) ->
       let t1' = eval1 t1 in
       TmNot(fi, t1')
+  | TmAnd(_,TmTrue(_),t2) ->
+        t2
+  | TmAnd(_,TmFalse(_),_) ->
+     TmFalse(dummyinfo)
+  | TmAnd(fi,t1,t2) ->
+       let t1'= eval1 t1 in
+       TmAnd(fi,t1',t2) 
   | _ -> 
       raise NoRuleApplies
 
@@ -86,3 +93,8 @@ let rec typeof t =
   | TmNot(fi,t1) ->
       if (=) (typeof t1) TyBool then TyBool
       else error fi "argument of Not is not a boolean"
+  | TmAnd(fi,t1,t2) ->
+      if (=) (typeof t1) TyBool then
+              if (=) (typeof t1) (typeof t2) then TyBool
+              else error fi "incompatible types"
+      else error fi "argument of AND is not a boolean"
